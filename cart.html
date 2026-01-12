@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        .cart-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .cart-items {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 20px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .item-details h3 {
+            font-size: 1rem;
+            margin-bottom: 5px;
+        }
+
+        .item-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .item-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .qty-input {
+            width: 50px;
+            padding: 5px;
+            text-align: center;
+        }
+
+        .remove-btn {
+            color: var(--danger-color);
+            cursor: pointer;
+            font-size: 0.9rem;
+            background: none;
+            border: none;
+            text-decoration: underline;
+        }
+
+        .cart-summary {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            height: fit-content;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 1rem;
+        }
+
+        .summary-total {
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .shipping-select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .cart-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+
+            <!-- 1. Cart (Left) -->
+            <div class="nav-icons">
+                <a href="cart.html" class="cart-icon">
+                    🛒
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+
+            <!-- 2. Logo (Center - handled by CSS absolute) -->
+            <a href="index.html" class="logo">
+                <img src="images/logo.png" alt="3lisl7" style="max-height: 120px;">
+            </a>
+
+            <!-- 3. Hamburger (Right) -->
+            <div class="hamburger-menu" onclick="toggleMenu()">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </div>
+
+            <!-- Side Drawer Links -->
+            <ul class="nav-links" id="navLinks">
+                <li><a href="index.html">الرئيسية</a></li>
+                <li><a href="index.html">كل المنتجات</a></li>
+                <li><a href="index.html">رجالي</a></li>
+                <li><a href="index.html">حريمي</a></li>
+            </ul>
+
+            <!-- Overlay -->
+            <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+        </div>
+    </nav>
+
+    <header class="container mt-2 mb-2">
+        <h1>سلة التسوق</h1>
+    </header>
+
+    <!-- Cart Content -->
+    <section class="container" id="cart-content-wrapper">
+        <!-- Loaded via JS -->
+    </section>
+
+    <!-- Hidden Form for Email Submission -->
+    <!-- REPLACE 'alwaasalah@gmail.com' WITH YOUR EMAIL TO CHANGE IT -->
+    <form id="email-form" action="https://formsubmit.co/alwaasalah@gmail.com" method="POST" style="display: none;">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_subject" value="طلب جديد من Ghazma Store">
+        <input type="hidden" name="Order_Details" id="email-order-details">
+        <input type="hidden" name="Customer_Data" id="email-customer-data">
+        <!-- Redirect to a thank you page or back to home with success param -->
+        <input type="hidden" name="_next" value="https://mysite.com/index.html?order=success">
+    </form>
+
+    <!-- Scripts -->
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/supabase-config.js"></script>
+
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/cart.js"></script>
+</body>
+
+</html>
