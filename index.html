@@ -1,101 +1,0 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ARIXI | متجر ملابس عصري</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-</head>
-
-<body>
-
-  <!-- Navbar -->
-  <nav class="navbar">
-    <div class="container">
-
-      <!-- 1. Cart (Left) -->
-      <div class="nav-icons">
-        <a href="cart.html" class="cart-icon">
-          🛒
-          <span class="cart-count">0</span>
-        </a>
-      </div>
-
-      <!-- 2. Logo (Center - handled by CSS absolute) -->
-      <!--<a href="index.html" class="logo">3lisl7</a>-->
-      <a href="#" class="logo">
-        <img src="images/logo.png" alt="3lisl7" style="max-height: 140px;">
-      </a>
-
-      <!-- 3. Hamburger (Right) -->
-      <div class="hamburger-menu" onclick="toggleMenu()">
-        <div class="hamburger-line"></div>
-        <div class="hamburger-line"></div>
-        <div class="hamburger-line"></div>
-      </div>
-
-      <!-- Side Drawer Links -->
-      <ul class="nav-links" id="navLinks">
-        <li><a href="index.html">الرئيسية</a></li>
-        <li><a href="#" onclick="filterProducts('all'); toggleMenu(); return false;">كل المنتجات</a></li>
-        <li><a href="#" onclick="filterProducts('men'); toggleMenu(); return false;">رجالي</a></li>
-        <li><a href="#" onclick="filterProducts('women'); toggleMenu(); return false;">حريمي</a></li>
-        <!-- Admin Link Hidden in Drawer or just removed? User asked to hide icon effectively. 
-             I'll add it here for mobile access or keeps it hidden purely. 
-             User said: "hide admin icon so I access it by link only" -> I will NOT include it in the menu.
-        -->
-      </ul>
-
-      <!-- Overlay -->
-      <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
-
-    </div>
-  </nav>
-
-  <!-- Discount Banner -->
-  <section class="discount-banner">
-    <h2 class="banner-title">خصومات تصل إلى 50%</h2>
-    <p class="banner-subtitle">على جميع المنتجات المختارة</p>
-    <button onclick="document.getElementById('products-section').scrollIntoView({behavior: 'smooth'})"
-      class="banner-btn">تسوق الآن</button>
-    </div>
-    <div class="banner-decoration">
-      <div class="decoration-circle circle-1"></div>
-      <div class="decoration-circle circle-2"></div>
-      <div class="decoration-circle circle-3"></div>
-    </div>
-  </section>
-
-  <!-- Products Section -->
-  <section id="products-section" class="container mb-2">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
-      <h2 style="font-size: 2rem;">أحدث المنتجات</h2>
-      <div class="filters">
-        <!-- Filters can be added here or just rely on navbar -->
-      </div>
-    </div>
-
-    <div id="product-grid" class="grid">
-      <!-- Products will be loaded here -->
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <p>جميع الحقوق محفوظة &copy; ARIXI</p>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <!-- Supabase SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="assets/js/supabase-config.js"></script>
-
-  <script src="assets/js/storage.js"></script>
-  <script src="assets/js/main.js"></script>
-  <script src="assets/js/index.js"></script>
-</body>
-
-</html>
