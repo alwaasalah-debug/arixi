@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARIXI | متجر ملابس عصري</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container">
+
+      <!-- 1. Cart (Left) -->
+      <div class="nav-icons">
+        <a href="cart.html" class="cart-icon">
+          🛒
+          <span class="cart-count">0</span>
+        </a>
+      </div>
+
+      <!-- 2. Logo (Center - handled by CSS absolute) -->
+      <!--<a href="index.html" class="logo">3lisl7</a>-->
+      <!-- Logo (center) -->
+      <a href="index.html" class="logo">
+        <img src="images/logo.png" alt="3lisl7" style="max-height: 100px;">
+      </a>
+
+      <!-- 3. Hamburger (Right) -->
+      <div class="hamburger-menu" onclick="toggleMenu()">
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+        <div class="hamburger-line"></div>
+      </div>
+
+      <!-- Side Drawer Links -->
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="#" onclick="filterProducts('all'); toggleMenu(); return false;">كل المنتجات</a></li>
+        <li><a href="#" onclick="filterProducts('men'); toggleMenu(); return false;">رجالي</a></li>
+        <li><a href="#" onclick="filterProducts('women'); toggleMenu(); return false;">حريمي</a></li>
+      </ul>
+
+      <!-- Overlay -->
+      <div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+
+    </div>
+  </nav>
+
+  <!-- Hero Slider -->
+  <header class="hero-slider">
+    <div class="slider-wrapper" id="heroSliderWrapper">
+      <!-- Slide 1 -->
+      <div class="hero-slide active"
+        style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/slide1.jpg');">
+        <div class="hero-content">
+          <h1>أناقة</h1>
+          <p>اكتشف أحدث صيحات الموضة </p>
+          <a href="#products-section" class="btn btn-hero">تسوق الآن</a>
+        </div>
+      </div>
+      <!-- Slide 2 -->
+      <div class="hero-slide"
+        style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/slide2.jpg');">
+        <div class="hero-content">
+          <h1>تخفيضات</h1>
+          <p>خصومات تصل إلى 50%</p>
+          <a href="#products-section" class="btn btn-hero">عرض العروض</a>
+        </div>
+      </div>
+      <!-- Slide 3 -->
+      <div class="hero-slide"
+        style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('images/slide3.jpg');">
+        <div class="hero-content">
+          <h1>جودة</h1>
+          <p>خامات عالية الجودة</p>
+          <a href="#products-section" class="btn btn-hero">اكتشف المزيد</a>
+        </div>
+      </div>
+    </div>
+    <div class="slider-dots" id="heroSliderDots"></div>
+    <!-- Arrow buttons removed -->
+  </header>
+
+  <!-- Benefits Section -->
+  <section class="benefits-section">
+    <div class="container">
+      <div class="benefit-item">
+        <div class="benefit-icon">🚚</div>
+        <div class="benefit-info">
+          <h3>شحن سريع</h3>
+          <p>توصيل لجميع المحافظات</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">💵</div> <!-- Changed icon to Cash -->
+        <div class="benefit-info">
+          <h3>الدفع عند الاستلام</h3>
+          <p>اطمئن، لا تدفع إلا عند استلام طلبك</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🔄</div>
+        <div class="benefit-info">
+          <h3>استبدال واسترجاع</h3>
+          <p>متاح خلال 14 يوم</p>
+        </div>
+      </div>
+      <div class="benefit-item">
+        <div class="benefit-icon">🎧</div>
+        <div class="benefit-info">
+          <h3>دعم فني</h3>
+          <p>متواجدون لخدمتكم 24/7</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  <!-- Products Section -->
+  <section id="products-section" class="container mb-2">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+      <h2 style="font-size: 2rem;">أحدث المنتجات</h2>
+      <div class="filters">
+        <!-- Filters can be added here or just rely on navbar -->
+      </div>
+    </div>
+
+    <div id="product-grid" class="grid">
+      <!-- Products will be loaded here -->
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="newsletter-section">
+    <div class="container">
+      <div class="newsletter-content">
+        <h2>انضم لقائمتنا البريدية</h2>
+        <p>احصل على أحدث العروض والخصومات مباشرة في بريدك</p>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); alert('شكراً لاشتراكك!');">
+          <input type="email" placeholder="أدخل بريدك الإلكتروني" required>
+          <button type="submit">اشتراك</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>جميع الحقوق محفوظة &copy; ARIXI</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <!-- Supabase SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
+
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/index.js"></script>
+</body>
+
+</html>
