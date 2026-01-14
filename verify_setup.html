@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ghazma Connection Test</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            direction: rtl;
+        }
+
+        .status {
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+
+        .pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>اختبار الاتصال بـ Supabase</h1>
+
+    <div id="db-status" class="status pending">1. جاري اختبار قاعدة البيانات (Database)...</div>
+    <div id="storage-status" class="status pending">2. جاري اختبار تخزين الصور (Storage)...</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/supabase-config.js"></script>
+    <script>
+        async function runTests() {
+            const dbStatus = document.getElementById('db-status');
+            const storageStatus = document.getElementById('storage-status');
+
+            // 1. Test Database
+            try {
+                // Try to select
+                const { data, error } = await supabaseClient
+                    .from('products')
+                    .select('count', { count: 'exact', head: true });
+
+                if (error) throw error;
+
+                dbStatus.textContent = '1. نجح الاتصال بقاعدة البيانات! ✅';
+                dbStatus.className = 'status success';
+            } catch (err) {
+                dbStatus.textContent = '1. فشل الاتصال بقاعدة البيانات: ' + err.message + ' ❌';
+                dbStatus.className = 'status error';
+                console.error(err);
+            }
+
+            // 2. Test Storage
+            try {
+                // Try to list files in 'products' bucket
+                const { data, error } = await supabaseClient
+                    .storage
+                    .from('products')
+                    .list();
+
+                if (error) {
+                    // Check if error is because bucket doesn't exist
+                    throw error;
+                }
+
+                storageStatus.textContent = '2. نجح الاتصال بمجلد الصور! ✅';
+                storageStatus.className = 'status success';
+            } catch (err) {
+                storageStatus.textContent = '2. فشل الوصول لمجلد الصور (تأكد أنك أنشأت مجلد باسم products وجعلته Public): ' + err.message + ' ❌';
+                storageStatus.className = 'status error';
+                console.error(err);
+            }
+        }
+
+        runTests();
+    </script>
+</body>
+
+</html>
