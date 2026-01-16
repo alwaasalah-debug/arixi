@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة التحكم | Ghazma</title>
+    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <style>
+        /* Admin Specific Styles */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .login-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+            text-align: center;
+            width: 300px;
+        }
+
+        .admin-container {
+            display: none;
+            /* Hidden until login */
+            margin-top: 40px;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .form-panel {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+        }
+
+        .preview-img {
+            max-width: 150px;
+            max-height: 150px;
+            margin-top: 10px;
+            display: none;
+            border: 1px solid #ddd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: var(--shadow-sm);
+        }
+
+        th,
+        td {
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #fafafa;
+            font-weight: bold;
+        }
+
+        .admin-img-thumb {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-overlay">
+        <div class="login-box">
+            <img src="images/logo.png" alt="Logo" style="width: 100px; margin: 0 auto 20px auto; display: block;">
+            <h2>تسجيل الدخول</h2>
+            <p class="mb-1">لوحة تحكم الأدمن</p>
+            <input type="email" id="admin-email" class="form-control mb-1" placeholder="البريد الإلكتروني">
+            <input type="password" id="admin-pass" class="form-control mb-1" placeholder="كلمة المرور">
+            <button onclick="checkAdmin()" class="btn" style="width: 100%;">دخول</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="admin-content" class="admin-container container">
+        <div class="admin-header">
+            <h1>لوحة التحكم</h1>
+            <button onclick="logout()" class="btn btn-outline">تسجيل خروج</button>
+        </div>
+
+        <!-- Add Product Form -->
+        <div class="form-panel">
+            <h2>إضافة منتج جديد</h2>
+            <form id="add-product-form" onsubmit="handleAddProduct(event)">
+                <input type="hidden" id="product-id"> <!-- Hidden ID for Editing -->
+
+                <div class="grid" style="grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label>اسم المنتج</label>
+                        <input type="text" id="p-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>رابط المنتج (Label)</label>
+                        <input type="text" id="p-label" class="form-control" placeholder="example-shoe"
+                            style="direction: ltr; text-align: right;">
+                    </div>
+                    <div class="form-group">
+                        <label>السعر (بعد الخصم)</label>
+                        <input type="number" id="p-price" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>السعر قبل الخصم (اختياري)</label>
+                        <input type="number" id="p-old-price" class="form-control" placeholder="مثال: 600">
+                    </div>
+                </div>
+
+                <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div class="form-group">
+                        <label>التصنيف <span style="font-size: 0.8rem; color: #888;">(اكتب بالضبط لتجميع
+                                المنتجات)</span></label>
+                        <input type="text" id="p-category" class="form-control" placeholder="مثال: رجالي، حريمي، أطفال"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label>صور المنتج (يمكن اختيار أكثر من صورة) <span
+                                style="font-size: 0.8rem; color: #dc3545;">(الحد الأقصى 1 ميجابايت
+                                للصورة)</span></label>
+                        <input type="file" id="p-images" class="form-control" accept="image/*" multiple
+                            onchange="previewImages(this)">
+                        <div id="images-preview-container"
+                            style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>المقاسات (مفصولة بفاصلة)</label>
+                    <input type="text" id="p-sizes" class="form-control" placeholder="مثال: 40, 41, 42" required>
+                </div>
+
+                <div class="form-group">
+                    <label>الألوان (مفصولة بفاصلة)</label>
+                    <input type="text" id="p-colors" class="form-control" placeholder="مثال: أحمر, أزرق" required>
+                </div>
+
+                <div class="form-group">
+                    <label>تفاصيل المنتج</label>
+                    <textarea id="p-details" class="form-control" rows="4"
+                        placeholder="اكتب تفاصيل المنتج هنا..."></textarea>
+                </div>
+
+                <button type="submit" class="btn">حفظ المنتج</button>
+                <button type="button" class="btn btn-outline" id="cancel-edit-btn" onclick="resetFormToAddMode()"
+                    style="display: none; margin-right: 10px;">إلغاء التعديل</button>
+            </form>
+        </div>
+
+        <!-- Products List -->
+        <div class="form-panel">
+            <h2>المنتجات الحالية</h2>
+            <div style="overflow-x: auto;">
+                <table id="products-table">
+                    <thead>
+                        <tr>
+                            <th>الصورة</th>
+                            <th>الاسم</th>
+                            <th>السعر</th>
+                            <th>التصنيف</th>
+                            <th>إجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody id="products-table-body">
+                        <!-- JS Populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="assets/js/supabase-config.js"></script>
+
+    <!-- Scripts -->
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/admin.js"></script>
+</body>
+
+</html>
