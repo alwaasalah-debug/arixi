@@ -43,7 +43,7 @@ function renderCartItem(item) {
       <div class="item-details" style="flex-grow: 1;">
         <h3>${item.name}</h3>
         <div class="item-meta">
-          المقاس: ${item.size} | اللون: ${item.color}
+          المقاس: ${item.size}
         </div>
         <div class="item-controls">
           <div class="qty-wrapper">
